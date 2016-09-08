@@ -1,0 +1,17 @@
+{
+  "name": "pic_jenny",
+  "version": "1.0.0",
+  "description": "used to mass generate realistic looking files",
+  "main": "index.js",
+  "repository": "https://github.com/Wambosa/pic_jenny",
+  "scripts": {
+    "start": "index.js"
+  },
+  "author": "Shon Diaz <shondiaz@gmail.com> http://shondiaz.com",
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "dependencies": {
+    "node-gd": "*"
+  }
+}

@@ -6,17 +6,19 @@ pic_jenny randomly creates people with important documents using document templa
 **NOT** compatible with windows :( due to node-gd dependency
 
 ### mac installation notes
-- **manually install xCode, then**
+- **manually** install xCode, then
 - xcode-select -s /Applications/Xcode.app/Contents/Developer
 - sudo port install pkgconfig gd2
 - npm install node-gd
 
 
 ### todo
+- linux installation notes
 - find a way to batch create (kinda slow)
-- take in positional data on each template
+- load each unique file only once (currently wasting memory by loading the same file over and over)
+- take in optional positional data on each documentClass
 - allow for additional settings on each document that interact with node-gd
-- customize output extension
+- customize export file format
 - better arg handling for specific drop location and other useful args like silent
 
 ### notes
