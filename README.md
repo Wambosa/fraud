@@ -23,3 +23,4 @@ pic_jenny randomly creates people with important documents using document templa
 
 ### notes
 - [good structured data](http://www.gutenberg.org/files/3201/files/)
+- [node-gd full docs](https://github.com/y-a-v-a/node-gd/blob/master/docs/index.md)
