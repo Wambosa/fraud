@@ -4,5 +4,5 @@
   "ProofOfInsurance": {"hex": "00AA00", "file": "proof_of_insurance.jpg"},
   "ProofOfResidence": {"hex": "44BB00", "file": "proof_of_residency_template.JPG"},
   "DriversLicense": {"hex": "0011FF", "file": "drivers_license_template.jpg"},
-  "SsnCard": {"hex": "1111FF", "file": "ssn_template.jpg"}
+  "SsnCard": {"hex": "FF0000", "file": "ssn_template.jpg"}
 }

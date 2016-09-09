@@ -13,9 +13,9 @@ pic_jenny randomly creates people with important documents using document templa
 
 
 ### todo
+- clean up hacks (preloading)
 - linux installation notes
 - find a way to batch create (kinda slow)
-- load each unique file only once (currently wasting memory by loading the same file over and over)
 - take in optional positional data on each documentClass
 - allow for additional settings on each document that interact with node-gd
 - customize export file format

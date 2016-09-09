@@ -3,57 +3,81 @@
 var root = process.cwd();
 
 var gd = require('node-gd');
-var person = require(`${root}/src/person`);
+var cache = require('./src/cache');
+var person = require(`./src/person`).with(cache);
 
-function main(fileLimit){
+const fontPath = `${root}/data/LibreBaskerville-Regular.ttf`;
 
-    fileLimit = +fileLimit || 5;
+function main(fileCount){
 
-    console.log(`BEGIN Image Generation of ${fileLimit} ish files`);
+    fileCount = +fileCount || 1;
 
-    let openedFileCount = 0;
+    console.log(`BEGIN Image Generation of ${fileCount} ish files`);
 
-    while(openedFileCount < fileLimit){
+    recurseCreate(fileCount)
+        .then(function(){
+
+            cache.destroy();
+            console.log("done!");
+        })
+        .catch(console.error);
+}
+
+function recurseCreate(countDown){
+
+    if(countDown <= 0){
+
+        return Promise.resolve();
+    }
+
+    return new Promise(function(resolve, reject){
 
         let p = person.create();
 
+        let savedFiles = 0;
+
         p.docs.forEach(function(doc){
+            let img = doc.gdImg;
 
-            openedFileCount++;
+            gd.create(img.width, img.height, function(err, dest) {
 
-            gd.openJpeg(`${root}/data/${doc.file}`, function(err, img) {
-                if (err) {
-                    console.error(`read fail: ${root}/data/${doc.file}`);
-                    throw err;
-                }
+                img.copy(dest, 0, 0, 0, 0, dest.width, dest.height);
 
-                var txtColor = img.colorAllocate(doc.color.r, doc.color.g, doc.color.b);
+                var textColor = dest.colorAllocate(doc.color.r, doc.color.g, doc.color.b);
 
-                var fontPath = `${root}/data/LibreBaskerville-Regular.ttf`;
-
-                img.stringFT(
-                    txtColor,
+                dest.stringFT(
+                    textColor,
                     fontPath,
-                    (img.width+img.height*.5) * .05,
+                    (dest.width+dest.height*.5) * .015,
                     p.handwriting,
-                    Math.round(img.width * .5),
-                    Math.round(img.height * .5),
+                    Math.round(dest.width * .5),
+                    Math.round(dest.height * .5),
                     `${p.first} ${p.last}'s ${doc.className}`
                 );
 
                 let saveName = `${p.first}_${p.last}_${doc.className}`;
-                let fileExt = 'png';
+                let fileExt = 'jpg';
 
-                img.savePng(`build/${saveName}.${fileExt}`, 1, function(err) {
-                    if(err) throw err;
+                dest.saveJpeg(`build/${saveName}.${fileExt}`, 75, function(err) {
+                    if(err)
+                        reject(err);
 
-                    console.log(`saved: ${saveName}.${fileExt}`);
+                    console.log(`saved: ${saveName}`);
+                    dest.destroy();
+
+                    if(++savedFiles === p.docs.length){
+                        console.log(`${(countDown - p.docs.length)} files left to go`);
+                        resolve(recurseCreate(countDown - p.docs.length));
+                    }
                 });
-
-                img.destroy();
             });
         });
-    }
+    });
 }
 
-main(process.argv.splice(2));
+cache.preloadDocuments(function(err){
+    if(err) throw err;
+
+    console.log("preloaded documents...");
+    main(process.argv.splice(2));
+});
