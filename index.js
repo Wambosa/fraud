@@ -1,11 +1,9 @@
 "use strict";
 
 var root = process.cwd();
+var fs = require('fs');
 
-var gd = require('node-gd');
-var cache = require('./src/cache');
-var person = require(`./src/person`).with(cache);
-
+const buildDir = `${root}/build`;
 const fontPath = `${root}/data/LibreBaskerville-Regular.ttf`;
 
 function main(fileCount){
@@ -18,6 +16,18 @@ function main(fileCount){
         .then(function(){
 
             cache.destroy();
+            console.log("done!");
+        })
+        .catch(console.error);
+}
+
+function windowsRun(fileCount){
+    fileCount = +fileCount || 1;
+
+    console.log(`BEGIN Image Replication of ${fileCount} ish files`);
+
+    recurseReplicate(fileCount)
+        .then(function(){
             console.log("done!");
         })
         .catch(console.error);
@@ -75,9 +85,61 @@ function recurseCreate(countDown){
     });
 }
 
-cache.preloadDocuments(function(err){
-    if(err) throw err;
+function recurseReplicate(countDown){
 
-    console.log("preloaded documents...");
-    main(process.argv.splice(2));
-});
+    if(countDown <= 0){
+
+        return Promise.resolve();
+    }
+
+    return new Promise(function(resolve, reject){
+
+        let p = person.create();
+
+        let savedFiles = 0;
+
+        p.docs.forEach(function(doc){
+
+            let saveName = `${p.first}_${p.last}_${doc.className}${path.extname(doc.file)}`;
+
+            let original = fs.createReadStream(`data/${doc.file}`);
+            original.pipe(fs.createWriteStream(`build/${saveName}`));
+
+            original.on('close', function(){
+                if(++savedFiles === p.docs.length){
+                    console.log(`${(countDown - p.docs.length)} files left to go`);
+                    resolve(recurseReplicate(countDown - p.docs.length));
+                }
+            });
+
+            original.on('error', function(e){
+                reject(e);
+            });
+        });
+    });
+}
+
+
+if (!fs.existsSync(buildDir))
+    fs.mkdirSync(buildDir);
+
+
+if(!/^win/.test(process.platform)){
+    var gd = require('node-gd');
+    var cache = require('./src/cache');
+    var person = require(`./src/person`).with(cache);
+
+    cache.preloadDocuments(function(err){
+        if(err) throw err;
+
+        console.log("preloaded documents...");
+        main(process.argv.splice(2));
+    });
+
+}else{
+
+    console.log("looks like you are running on windows");
+    var path = require('path');
+    var person = require(`./src/person`);
+    windowsRun(process.argv.splice(2));
+}
