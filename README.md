@@ -1,10 +1,8 @@
 # Pic Jenny
 _mass image generation_
 
-for quickly creating many realistic image files with slight differences
-pic_jenny randomly creates people with important documents using document templates and a simple customization script.
-
-**NOT** _fully_ compatible with windows :( due to node-gd dependency
+A play on words Picture _Jennerator_ is for quickly creating many realistic scanned/photographed documents.
+Pic Jenny currently randomly creates _people_ with filled documents using document templates and positional metadata.
 
 ## OSX install
 - **don't** just do npm-install
@@ -13,14 +11,15 @@ pic_jenny randomly creates people with important documents using document templa
 - ```sudo port install pkgconfig gd2```
 - ```npm install node-gd```
 
+## Windows Install
+**NOT** compatible with windows :( due to node-gd dependency
+
 ## usage
 ```node ./index.js 9000```
 
-## todo
-- clean up hacks (so many here)
+## future
+- separate the current use case into its own project (from the pure recursive create logic + metadata json read + cache)
 - linux installation note
-- take in optional positional data on each documentClass
-- allow for additional settings on each document that interact with node-gd
 - customize export file format
 - better arg handling for specific drop location and other useful args like silent
 

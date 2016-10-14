@@ -1,0 +1,39 @@
+{
+  "docs": [
+    {
+      "class": "AutoContract",
+      "file": "contract_template.jpg",
+      "form": [
+        {
+          "property": "fullName",
+          "x": 435, "y": 450
+        },
+        {
+          "property": "contractDate",
+          "x": 300, "y": 375
+        }
+      ]
+    },
+    {
+      "class": "ProofOfIncome",
+      "file": "proof_of_income.jpg"
+    },
+    {
+      "class": "ProofOfInsurance",
+      "file": "proof_of_insurance.jpg"
+    },
+    {
+      "class": "ProofOfResidence",
+      "file": "proof_of_residency_template.JPG"
+    },
+    {
+      "class": "DriversLicense",
+      "isColor": true,
+      "file": "drivers_license_template.jpg"
+    },
+    {
+      "class": "SsnCard",
+      "file": "ssn_template.jpg"
+    }
+  ]
+}
