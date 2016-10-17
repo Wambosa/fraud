@@ -5,16 +5,23 @@ var root = process.cwd();
 var fs = require('fs');
 var gd = require('node-gd');
 var cache = require('./src/DocumentCache');
-var personGen = require(`./src/PersonGenerator`);
+var personGen = require(`./example/exampleGenerator`);
 
 const buildDir = `${root}/build`;
-const fontPath = `${root}/data/LibreBaskerville-Regular.ttf`;
+const fontPath = `${root}/fonts/LibreBaskerville-Regular.ttf`;
 
-function main(fileCount){
+var gen = null;
 
-    fileCount = +fileCount || 1;
+function main(args){
 
-    console.log(`BEGIN Image Generation of ${fileCount} ish files`);
+    let fileCount = +args[0] || 1;
+    let dataGen = args[1] || './example/exampleGenerator.js';
+
+    console.log(`BEGIN Image Generation of ${fileCount} ish files using ${dataGen} generator`);
+
+    gen = require(dataGen);
+    if(!gen)
+        throw `problem loading data generator: ${dataGen}`;
 
     recurseCreate(fileCount)
         .then(function(){
@@ -32,7 +39,7 @@ function recurseCreate(countDown){
 
     return new Promise(function(resolve, reject){
 
-        let p = personGen.create();
+        let p = gen.generate();
 
         let savedFiles = 0;
 
@@ -43,16 +50,21 @@ function recurseCreate(countDown){
 
                 img.copy(dest, 0, 0, 0, 0, dest.width, dest.height);
 
-                if(doc.isColor)
-                    var textColor = dest.colorAllocate(p.handwriting.color.r, p.handwriting.color.g, p.handwriting.color.b);
-
                 if(doc.form){
+
+                    if(p.handwriting && doc.isColor)
+                        var textColor = dest.colorAllocate(p.handwriting.color.r, p.handwriting.color.g, p.handwriting.color.b);
+
+                    let defaultFontSize = doc.form.fontSize || 15;
+                    let sizeDeviation = p.handwriting && p.handwriting.size || 1;
+                    let angle = p.handwriting && p.handwriting.angle;
+
                     doc.form.forEach(function(field){
                         dest.stringFT(
                             textColor || dest.colorAllocate(0,0,0),
                             fontPath,
-                            field.isWritten && ((doc.form.fontSize||18) * p.handwriting.size) || doc.fontSize,
-                            field.isWritten && p.handwriting.angle || 0,
+                            field.isWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
+                            field.isWritten && angle || 0,
                             field.x,
                             field.y,
                             ''+p[field.property]

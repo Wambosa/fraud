@@ -1,8 +1,8 @@
 "use strict";
 
-var names = require(`../data/names.json`);
-var cities = require('../data/cities.json');
-var states = require('../data/states.json');
+var names = require(`./names.json`);
+var cities = require('./cities.json');
+var states = require('./states.json');
 
 function randomInt(min, max) {return Math.floor(Math.random()*(max-min+1)+min);}
 
@@ -31,7 +31,7 @@ function randPhone(){
 }
 
 module.exports = {
-    create: function(){
+    generate: function(){
 
         let first = randName();
         let last = randName();

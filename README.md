@@ -15,10 +15,9 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 **NOT** compatible with windows :( due to node-gd dependency
 
 ## usage
-```node ./index.js 9000```
+```node ./index.js 9000 /my/dir/dataGen.js```
 
 ## future
-- separate the current use case into its own project (from the pure recursive create logic + metadata json read + cache)
 - linux installation note
 - customize export file format
 - better arg handling for specific drop location and other useful args like silent
