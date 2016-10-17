@@ -51,11 +51,11 @@ function recurseCreate(countDown){
                         dest.stringFT(
                             textColor || dest.colorAllocate(0,0,0),
                             fontPath,
-                            p.handwriting.size,
-                            p.handwriting.angle,
+                            field.isWritten && ((doc.form.fontSize||18) * p.handwriting.size) || doc.fontSize,
+                            field.isWritten && p.handwriting.angle || 0,
                             field.x,
                             field.y,
-                            p[field.property]
+                            ''+p[field.property]
                         );
                     });
                 }
