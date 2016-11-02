@@ -16,14 +16,16 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 
 ## usage
 - ```node ./index.js 9000 /my/dir/dataGen.js```
+    - where **9000** is the number of randomly generated documents you want
+    - where **/my/dir/dataGen.js** is the random data generator created by _you_
 - reads from data folder and populates blank documents using positional metadata json file `templateMetadata.json`
 
 ## future
+- verbose CLI arguments such as (--gen --count --debug --silent --out)
 - add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
 - work around node-gd limitations (mostly a **wontfix** for this quick light image processing implementation)
 - linux installation note
 - customize export file format
-- better arg handling for specific drop location and other useful args like silent
 
 ## notes
 - [good structured data](http://www.gutenberg.org/files/3201/files/)
