@@ -49,8 +49,8 @@ module.exports = {
         let vehicle = {
             cost: randomInt(10000, 25000),
             year: randomInt(2010, 2020),
-            make: 'Ford', // todo: random list these
-            model: 'Fusion',
+            make: ['FORD', 'TOYOTA', 'HONDA', 'BMW'][randomInt(0, 3)],
+            model: ['Commuter', 'Racer', 'Worker', 'Abductor'][randomInt(0, 3)],
             odometer: randomInt(0,100000),
             vin: randomInt(9999999999999999999999999, 9999999999999999999999999999).toString(36).slice(0, 17).toUpperCase(),
             color: ['RED', 'BLK', 'WHT', 'BLUE'][randomInt(0, 3)],
@@ -60,13 +60,34 @@ module.exports = {
         vehicle.newUsed = vehicle.odometer < 30000 ? 'NEW': 'USED';
 
         let loan = {
-            rate: randomInt(15, 35),
+            rate: randomInt(5, 30),
             term: [48, 60, 72][randomInt(0, 2)],
-            down: randomInt(0, 5000)
+            down: randomInt(0, 9500),
+	        payment: 0
         };
         loan.financed = vehicle.cost - loan.down;
-        loan.financeCharge = (loan.financed * (loan.rate*.01)) * (loan.term/12);
+        loan.financeCharge = loan.financed * ( ((loan.rate * .01)/12) * loan.term);
+	    loan.payment = (loan.financed + loan.financeCharge + loan.down) / loan.term;
 
+	    let insurance = {
+		    deductable: randomInt(500, 5000),
+		    collision: randomInt(0, 10000),
+		    injury: randomInt(0, 10000),
+		    damage: randomInt(0, 10000),
+		    premium: randomInt(0, 1000),
+		    seller: `${randCity()} Insurance ${randomInt(0,10) > 6 ? 'Scam' : ''}`,
+		    signature: fullName
+	    };
+
+	    let coBuyer = {
+		    fullName: '',
+		    contactInfo: ''
+	    };
+
+	    if(loan.rate > 19){
+		    coBuyer.fullName = `${randName()} ${randName()}`;
+		    coBuyer.contactInfo = `${coBuyer.fullName}\n${randAddress()}\n${randPhone()}`;
+	    }
 
         return {
             dealerNumber: randomInt(100000, 999999),
@@ -74,13 +95,13 @@ module.exports = {
             rosNumber: randomInt(1000, 9990),
             stockNumber: randomInt(1, 100),
 
+            first: first,
+            last: last,
             fullName: fullName,
-            address: randAddress(),
-            phone: randPhone(),
 
-            sellerName: seller.name,
-            sellerAddress: seller.address,
-            sellerPhone: seller.phone,
+	        buyerContact: `${fullName}\n${randAddress()}\n${randPhone()}`,
+	        coBuyerContact: coBuyer.contactInfo,
+            sellerContact: `${seller.name}\n${seller.address}\n${seller.phone}`,
 
             vehicleNewUsed: vehicle.newUsed,
             vehicleYear: vehicle.year,
@@ -92,14 +113,31 @@ module.exports = {
             vehicleLicenseNo: vehicle.licenseNo,
             vehicleIsPersonal: vehicle.isPersonal,
 
-            first: first,
-            last: last,
+	        interestRate: loan.rate,
+	        loanFinanceCharge: loan.financeCharge.toFixed(2),
+	        loanAmountFinanced: loan.financed.toFixed(2),
+			loanTotal: (loan.financed + loan.financeCharge).toFixed(2),
+	        downpayment: loan.down,
+	        totalSalePrice: (loan.financed + loan.financeCharge + loan.down).toFixed(2),
+
+	        numberOfPayments: loan.term,
+	        paymentAmount: loan.payment.toFixed(2),
             contractDate: randDate(),
-            handwriting: {
+
+			insuranceDeductable: insurance.deductable,
+	        insuranceCollision: insurance.collision,
+	        insuranceInjury: insurance.injury,
+	        insuranceDamage: insurance.damage,
+	        insurancePremium: insurance.premium,
+	        insuranceSeller: insurance.seller,
+
+	        coBuyerSignature: coBuyer.fullName,
+
+	        handwriting: {
                 angle: randomInt(-4, 4) * .025,
                 font: 'future todo',
                 size: randomInt(3, 12) * .1,
-                color: {r: randomInt(0,255), g: randomInt(0,255), b: randomInt(0,255)},
+                color: {r: randomInt(0,255), g: randomInt(0,255), b: randomInt(0,255)}
             }
         }
     }

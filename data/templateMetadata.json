@@ -6,92 +6,169 @@
       "fontSize": 7,
       "form": [
         {
-          "property": "dealerNumber",
-          "isWritten": false,
+          "name": "dealerNumber",
+          "isHandWritten": false,
           "x": 87, "y": 85
         },
         {
-          "property": "contractNumber",
+          "name": "contractNumber",
           "x": 245, "y": 85
         },
         {
-          "property": "rosNumber",
+          "name": "rosNumber",
           "x": 396, "y": 85
         },
         {
-          "property": "stockNumber",
+          "name": "stockNumber",
           "x": 581, "y": 85
         },
 
-        {
-          "property": "fullName",
-          "x": 30, "y": 115
-        },
-        {
-          "property": "address",
-          "x": 30, "y": 130
-        },
-        {
-          "property": "phone",
-          "x": 30, "y": 159
-        },
+
 
         {
-          "property": "sellerName",
-          "x": 453, "y": 115
+          "name": "buyerContact",
+          "x": 30, "y": 119
         },
         {
-          "property": "sellerAddress",
-          "x": 453, "y": 130
+          "name": "coBuyerContact",
+          "x": 245, "y": 119
         },
         {
-          "property": "sellerPhone",
-          "x": 453, "y": 159
+          "name": "sellerContact",
+          "x": 455, "y": 119
         },
 
+
+
         {
-          "property": "vehicleNewUsed",
+          "name": "vehicleNewUsed",
           "x": 24, "y": 198
         },
         {
-          "property": "vehicleYear",
+          "name": "vehicleYear",
           "x": 67, "y": 185
         },
         {
-          "property": "vehicleMake",
+          "name": "vehicleMake",
           "x": 100, "y": 185
         },
         {
-          "property": "vehicleModel",
+          "name": "vehicleModel",
           "x": 155, "y": 185
         },
         {
-          "property": "vehicleOdometer",
+          "name": "vehicleOdometer",
           "x": 264, "y": 185
         },
         {
-          "property": "vehicleVin",
+          "name": "vehicleVin",
           "x": 386, "y": 185
         },
         {
-          "property": "vehicleColor",
+          "name": "vehicleColor",
           "x": 593, "y": 185
         },
         {
-          "property": "vehicleLicenseNo",
+          "name": "vehicleLicenseNo",
           "x": 70, "y": 209
         },
         {
-          "property": "vehicleIsPersonal",
+          "name": "vehicleIsPersonal",
           "x": 412, "y": 205
         },
 
 
 
         {
-          "property": "contractDate",
-          "isWritten": true,
-          "x": 300, "y": 375
+          "name": "interestRate",
+          "x": 40, "y": 335
+        },
+        {
+          "name": "loanFinanceCharge",
+          "x": 175, "y": 335
+        },
+        {
+          "name": "loanAmountFinanced",
+          "x": 300, "y": 335
+        },
+        {
+          "name": "loanTotal",
+          "x": 425, "y": 335
+        },
+        {
+          "name": "downpayment",
+          "x": 562, "y": 320
+        },
+        {
+          "name": "totalSalePrice",
+          "x": 562, "y": 335
+        },
+
+
+
+        {
+          "name": "numberOfPayments",
+          "x": 100, "y": 370
+        },
+        {
+          "name": "paymentAmount",
+          "x": 300, "y": 370
+        },
+        {
+          "name": "contractDate",
+          "x": 500, "y": 370
+        },
+
+
+
+        {
+          "name": "insuranceDeductable",
+          "x": 50, "y": 634
+        },
+        {
+          "name": "insuranceCollision",
+          "x": 50, "y": 649
+        },
+        {
+          "name": "insuranceInjury",
+          "x": 110, "y": 662
+        },
+        {
+          "name": "insuranceDamage",
+          "x": 110, "y": 675
+        },
+        {
+          "name": "insurancePremium",
+          "x": 285, "y": 716
+        },
+        {
+          "name": "insuranceSeller",
+          "x": 49, "y": 770
+        },
+        {
+          "name": "fullName",
+          "font": "todo override default",
+          "isHandWritten": true,
+          "x": 205, "y": 770
+        },
+        {
+          "name": "coBuyerSignature",
+          "font": "todo override default",
+          "x": 205, "y": 798
+        },
+
+
+
+        {
+          "name": "fullName",
+          "font": "todo override default",
+          "isHandWritten": true,
+          "x": 38, "y": 850
+        },
+        {
+          "name": "coBuyerSignature",
+          "font": "todo override default",
+          "x": 331, "y": 850
         }
       ]
     },

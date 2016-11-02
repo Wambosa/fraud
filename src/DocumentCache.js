@@ -20,6 +20,12 @@ module.exports = {
         let count = 0;
 
         templateMetadata.docs.forEach(function(doc){
+
+            if(doc.form && doc.form.length > 35)
+                console.warn(`\n\n\nHEY! doc ${doc.class} has ${doc.form.length} fields`,
+                    'node-gd tends to silent fail some text rendering with too many fields or characters',
+                    'roughly greater than 425 characters can get the bug');
+
             gd.openJpeg(`./data/${doc.file}`, function(err, img) {
                 if (err)
                     callback(err);
