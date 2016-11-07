@@ -178,7 +178,50 @@
     },
     {
       "class": "ProofOfInsurance",
-      "file": "proof_of_insurance.jpg"
+      "file": "proof_of_insurance.jpg",
+      "fontSize": 10,
+      "form": [
+        {
+          "name": "insuranceSeller",
+          "x": 180, "y": 35
+        },        
+        {
+          "name": "naic",
+          "x": 475, "y": 49
+        },        
+        {
+          "name": "policyNumber",
+          "x": 55, "y": 110
+        },
+        {
+          "name": "insuranceEffective",
+          "x": 224, "y": 110
+        },
+        {
+          "name": "insuranceExpiration",
+          "x": 370, "y": 110
+        },
+        {
+          "name": "address",
+          "x": 200, "y": 150
+        },
+        {
+          "name": "vehicleVin",
+          "x": 155, "y": 235
+        },
+        {
+          "name": "vehicleYear",
+          "x": 70, "y": 285
+        },
+         {
+          "name": "vehicleMake",
+          "x": 216, "y": 285
+        },   
+        {
+          "name": "vehicleModel",
+          "x": 375, "y": 285
+        }              
+      ]
     },
     {
       "class": "ProofOfResidence",
@@ -186,12 +229,83 @@
     },
     {
       "class": "DriversLicense",
-      "isColor": true,
-      "file": "drivers_license_template.jpg"
+      "file": "drivers_license_template.jpg",
+      "fontSize": 6,
+      "form": [
+        {
+          "name": "dlNumber",
+          "x": 115, "y": 68
+        },
+        {
+          "name": "dlClass",
+          "x": 231, "y": 68
+        },
+        {
+          "name": "dlIssuedOn",
+          "x": 115, "y": 80
+        },  
+        {
+          "name": "dlExpiresOn",
+          "x": 223, "y": 82
+        },
+        {
+          "name": "dlBirth",
+          "x": 122, "y": 94
+        },
+        {
+          "name": "first",
+          "x": 99, "y": 105
+        },
+        {
+          "name": "last",
+          "x": 100, "y": 115
+        },
+        {
+          "name": "address",
+          "x": 100, "y": 131
+        },   
+        {
+          "name": "dlRestrict",
+          "x": 164, "y": 156
+        },   
+        {
+          "name": "dlHeight",
+          "x": 133, "y": 170
+        },   
+        {
+          "name": "dlSex",
+          "x": 200, "y": 169
+        },     
+        {
+          "name": "dlEyes",
+          "x": 241, "y": 170
+        },   
+        {
+          "name": "dlDd",
+          "x": 130, "y": 183
+        },     
+        {
+          "name": "fullName",
+          "isHandWritten": true,
+          "x": 20, "y": 182
+        }           
+      ]
     },
     {
       "class": "SsnCard",
-      "file": "ssn_template.jpg"
+      "file": "ssn_template.jpg",
+      "fontSize": 10,
+      "form": [
+        {
+          "name": "ssn",
+          "x": 175, "y": 135
+        },
+        {
+          "name": "fullName",
+          "isHandWritten": true,
+          "x": 165, "y": 223
+        }
+      ]
     }
   ]
 }

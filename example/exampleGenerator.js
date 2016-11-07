@@ -39,6 +39,21 @@ module.exports = {
         let appId = "";
         for(let i=0; i < fullName.length; i++)
             appId += fullName.charAt(i).charCodeAt(0);
+	    let ssn = randomInt(100, 999)+'-'+randomInt(10, 99)+'-'+randomInt(1000, 9999);
+
+	    let driversLicense = {
+		    id: randomInt(100000, 999999),
+		    class: ['A', 'B', 'C', 'C', 'D', 'E'][randomInt(0, 5)],
+		    issuedOn: randDate(),
+		    expireOn: randDate(),
+		    birth: randDate(),
+		    address: randAddress(),
+		    restriction: ['NONE', 'NONE', 'NONE', 'A', 'B', 'C', 'D', 'E'][randomInt(0, 7)],
+		    height: randomInt(4,6)+'-'+randomInt(1, 11),
+		    dd: randomInt(10000000000000000000, 99999999999999999999),
+		    sex: ['M', 'F', '?'][randomInt(0,2)],
+		    eyes: ['BRO', 'BLK', 'RED', 'BLU', 'GRN', 'YEL'][randomInt(0, 5)]
+	    };
 
         let seller = {
             name: randName(),
@@ -70,6 +85,10 @@ module.exports = {
 	    loan.payment = (loan.financed + loan.financeCharge + loan.down) / loan.term;
 
 	    let insurance = {
+		    policyNumber: randomInt(1000000000, 9999999999),
+		    naic: randomInt(10000, 99999),
+		    effectiveDate: randDate(),
+		    expiration: randDate(),
 		    deductable: randomInt(500, 5000),
 		    collision: randomInt(0, 10000),
 		    injury: randomInt(0, 10000),
@@ -99,7 +118,7 @@ module.exports = {
             last: last,
             fullName: fullName,
 
-	        buyerContact: `${fullName}\n${randAddress()}\n${randPhone()}`,
+	        buyerContact: `${fullName}\n${driversLicense.address}\n${randPhone()}`,
 	        coBuyerContact: coBuyer.contactInfo,
             sellerContact: `${seller.name}\n${seller.address}\n${seller.phone}`,
 
@@ -132,6 +151,25 @@ module.exports = {
 	        insuranceSeller: insurance.seller,
 
 	        coBuyerSignature: coBuyer.fullName,
+
+	        ssn: ssn,
+
+	        dlNumber: driversLicense.id,
+	        dlClass: driversLicense.class,
+	        dlIssuedOn: driversLicense.issuedOn,
+	        dlExpiresOn: driversLicense.expireOn,
+	        dlBirth: driversLicense.birth,
+	        address: driversLicense.address,
+	        dlRestrict: driversLicense.restriction,
+	        dlHeight: driversLicense.height,
+	        dlSex: driversLicense.sex,
+	        dlEyes: driversLicense.eyes,
+	        dlDd: driversLicense.dd,
+
+	        naic: insurance.naic,
+	        policyNumber: insurance.policyNumber,
+	        insuranceEffective: insurance.effectiveDate,
+	        insuranceExpiration: insurance.expiration,
 
 	        handwriting: {
                 angle: randomInt(-4, 4) * .025,
