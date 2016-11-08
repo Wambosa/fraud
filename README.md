@@ -22,7 +22,9 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 
 ## future
 - verbose CLI arguments such as (--gen --count --debug --silent --out)
+- add links to example output
 - add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
+- support asynchronous data generator (for potentially network dependant sources)
 - work around node-gd limitations (mostly a **wontfix** for this quick light image processing implementation)
 - linux installation note
 - customize export file format

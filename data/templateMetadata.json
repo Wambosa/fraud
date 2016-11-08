@@ -294,7 +294,7 @@
     {
       "class": "SsnCard",
       "file": "ssn_template.jpg",
-      "fontSize": 10,
+      "fontSize": 12,
       "form": [
         {
           "name": "ssn",
