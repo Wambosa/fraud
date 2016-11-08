@@ -22,6 +22,7 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 
 ## future
 - verbose CLI arguments such as (--gen --count --debug --silent --out)
+- use pool of template images per type
 - add links to example output
 - add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
 - support asynchronous data generator (for potentially network dependant sources)
