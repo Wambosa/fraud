@@ -1,9 +1,9 @@
 {
-  "name": "pic_jenny",
+  "name": "fruad",
   "version": "1.0.0",
   "description": "used to mass generate realistic looking files",
   "main": "index.js",
-  "repository": "https://github.com/Wambosa/pic_jenny",
+  "repository": "https://github.com/Wambosa/fruad",
   "scripts": {
     "start": "index.js"
   },

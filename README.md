@@ -4,8 +4,14 @@ _mass image generation_
 Despite its name, the intent is not to commit fruad itself. The need is for quickly creating many realistic scanned/photographed documents.
 FRUAD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata.
 
+
+# Installation
+- you **cannot** just call npm install since libgd needs to be built!
+
 ## Ubuntu Install
-- 
+- `sudo apt-get update`
+- `sudo apt-get install libgd2-dev`
+- `npm install node-gd`
 
 ## OSX install
 - **don't** just do npm-install
@@ -13,7 +19,6 @@ FRUAD uses a **data generator** to randomly create _people_ with filled document
 - ```xcode-select -s /Applications/Xcode.app/Contents/Developer```
 - ```sudo port install pkgconfig gd2```
 - ```npm install node-gd```
-
 
 ## Windows Install
 **NOT** compatible with windows :( due to node-gd dependency
