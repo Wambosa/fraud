@@ -1,8 +1,11 @@
-# Pic Jenny
+# Fabricated Realistic Unique Artificial Documents
 _mass image generation_
 
-A play on words; the Picture _Jennerator_ is for quickly creating many realistic scanned/photographed documents.
-Pic Jenny currently randomly creates _people_ with filled documents using document templates and positional metadata.
+Despite its name, the intent is not to commit fruad itself. The need is for quickly creating many realistic scanned/photographed documents.
+FRUAD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata.
+
+## Ubuntu Install
+- 
 
 ## OSX install
 - **don't** just do npm-install
@@ -10,6 +13,7 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 - ```xcode-select -s /Applications/Xcode.app/Contents/Developer```
 - ```sudo port install pkgconfig gd2```
 - ```npm install node-gd```
+
 
 ## Windows Install
 **NOT** compatible with windows :( due to node-gd dependency
@@ -20,6 +24,7 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
     - where **/my/dir/dataGen.js** is the random data generator created by _you_
 - reads from data folder and populates blank documents using positional metadata json file `templateMetadata.json`
 
+
 ## future
 - verbose CLI arguments such as (--gen --count --debug --silent --out)
 - use pool of template images per type
@@ -27,7 +32,6 @@ Pic Jenny currently randomly creates _people_ with filled documents using docume
 - add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
 - support asynchronous data generator (for potentially network dependant sources)
 - work around node-gd limitations (mostly a **wontfix** for this quick light image processing implementation)
-- linux installation note
 - customize export file format
 
 ## notes
