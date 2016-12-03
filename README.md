@@ -1,8 +1,8 @@
 # Fabricated Realistic Unique Artificial Documents
 _mass image generation_
 
-Despite its name, the intent is not to commit fruad itself. The need is for quickly creating many realistic scanned/photographed documents.
-FRUAD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata.
+Despite its name, the intent is not to actually commit fraud itself. The need is for quickly creating many realistic scanned/photographed documents.
+FRUAD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata. Fun Fact: intentionally swapped the _u_ and _a_ in fraud
 
 
 # Installation
