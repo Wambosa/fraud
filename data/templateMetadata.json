@@ -4,23 +4,24 @@
       "class": "AutoContract",
       "file": "contract_template.jpg",
       "fontSize": 7,
-      "form": [
+      "rotation": "up",
+      "fields": [
         {
           "name": "dealerNumber",
           "isHandWritten": false,
-          "x": 87, "y": 88
+          "x": 87, "y": 82
         },
         {
           "name": "contractNumber",
-          "x": 245, "y": 88
+          "x": 245, "y": 82
         },
         {
           "name": "rosNumber",
-          "x": 396, "y": 88
+          "x": 396, "y": 82
         },
         {
           "name": "stockNumber",
-          "x": 581, "y": 88
+          "x": 581, "y": 82
         },
 
 
@@ -180,7 +181,7 @@
       "class": "ProofOfInsurance",
       "file": "proof_of_insurance.jpg",
       "fontSize": 10,
-      "form": [
+      "fields": [
         {
           "name": "insuranceSeller",
           "x": 180, "y": 35
@@ -231,7 +232,7 @@
       "class": "DriversLicense",
       "file": "drivers_license_template.jpg",
       "fontSize": 6,
-      "form": [
+      "fields": [
         {
           "name": "dlNumber",
           "x": 115, "y": 68
@@ -295,7 +296,7 @@
       "class": "SsnCard",
       "file": "ssn_template.jpg",
       "fontSize": 12,
-      "form": [
+      "fields": [
         {
           "name": "ssn",
           "x": 175, "y": 135

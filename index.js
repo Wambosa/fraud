@@ -51,60 +51,42 @@ function recurseCreate(countDown) {
 
 	            let saveName = `${person.first}_${person.last}_${doc.class}`;
 
-                if(doc.form) {
+	            let rotations = {
+		            up: {type: "vertical", angle: 0, width: img.width, height: img.height},
+		            left: {angle: 90, width: img.height, height: img.width},
+		            down: {type: "vertical", angle: 180, width: img.width, height: img.height},
+		            right: {angle: 270, width: img.height, height: img.width}
+	            };
 
-                    if(person.handwriting && doc.isColor)
-                        var textColor = dest.colorAllocate(person.handwriting.color.r, person.handwriting.color.g, person.handwriting.color.b);
+	            let appliedRotation = doc.rotation || ["up", "left", "down", "right"][Math.floor(Math.random()*4)];
+	            let r = rotations[appliedRotation];
 
-                    let defaultFontSize = doc.fontSize || 15;
-                    let sizeDeviation = person.handwriting && person.handwriting.size || 1;
-                    let angle = person.handwriting && person.handwriting.angle;
+                if(doc.fields)
+		            saveMetadata({
+			            name: saveName,
+			            class: doc.class,
+			            rotation: appliedRotation,
+			            fields: writeTextOnImage(doc, person, dest)
+		            });
 
-	                let charCount = 0;
-                    doc.form.forEach(function(field) {
-	                    charCount += (''+person[field.name]).length;
-
-                        dest.stringFT(
-                            textColor || dest.colorAllocate(0,0,0),
-                            fontPath,
-                            field.isHandWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
-                            field.isHandWritten && angle || 0,
-                            field.x,
-                            field.y,
-                            ''+person[field.name]
-                        );
-                    });
-
-	                if(charCount >= 425)
-	                    console.log(`WARN: ${saveName} char render count is ${charCount}`);
-                }
-                
-                
-                let rotations = [
-                    {name: "up", type: "vertical", angle: 0, width: img.width, height: img.height},
-                    {name: "left", angle: 90, width: img.height, height: img.width},
-                    {name: "down", type: "vertical", angle: 180, width: img.width, height: img.height},
-                    {name: "right", angle: 270, width: img.height, height: img.width}
-                ];
-                
-                let r = rotations[Math.floor(Math.random()*4)];
-                
                 gd.create(r.width, r.height, function(err, finalImage){
-                    
+
                     if(r.type == "vertical")
                         dest.copyRotated(finalImage, r.width*.5, r.height*.5, 0, 0, r.width, r.height, r.angle);
                     else
                         dest.copyRotated(finalImage, r.width*.5, r.height*.5, 0, 0, r.height, r.width, r.angle);
 
+	                dest.destroy();
+
                     let fileExt = 'jpg';
-    
                     finalImage.saveJpeg(`build/${saveName}.${fileExt}`, 75, function(err) {
                         if(err)
                             reject(err);
-    
+
                         console.log(`saved: ${saveName}`);
+
                         finalImage.destroy();
-    
+
                         if(++savedFiles === cache.docs.length) {
                             console.log(`${(countDown - cache.docs.length)} files left to go`);
                             resolve(recurseCreate(countDown - cache.docs.length));
@@ -113,11 +95,58 @@ function recurseCreate(countDown) {
 
                 });
 
-
-
             });
         });
     });
+}
+
+function saveMetadata(object){
+	fs.writeFile(`${buildDir}/${object.name}.json`, JSON.stringify(object, null, ' '));
+}
+
+function writeTextOnImage(doc, person, dest){
+	let charCount = 0;
+	let boundingBoxes = [];
+
+	if(person.handwriting && doc.isColor)
+		var textColor = dest.colorAllocate(person.handwriting.color.r, person.handwriting.color.g, person.handwriting.color.b);
+
+	let defaultFontSize = doc.fontSize || 15;
+	let sizeDeviation = person.handwriting && person.handwriting.size || 1;
+	let angle = person.handwriting && person.handwriting.angle;
+
+	doc.fields.forEach(function(field) {
+		charCount += (''+person[field.name]).length;
+
+		dest.stringFT(
+			textColor || dest.colorAllocate(0,0,0),
+			fontPath,
+			field.isHandWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
+			field.isHandWritten && angle || 0,
+			field.x,
+			field.y,
+			''+person[field.name]
+		);
+
+		boundingBoxes.push({
+			name: field.name,
+			bounds: dest.stringFT(
+				dest.colorAllocate(0,0,0),
+				fontPath,
+				field.isHandWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
+				field.isHandWritten && angle || 0,
+				field.x,
+				field.y,
+				''+person[field.name],
+				true
+			)
+		});
+	});
+
+	if(charCount >= 425)
+		console.log(`WARN: ${person.first}_${person.last}_${doc.class} char render count is ${charCount}`);
+
+	return boundingBoxes;
 }
 
 if(!fs.existsSync(buildDir))
