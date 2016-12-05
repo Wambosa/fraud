@@ -8,19 +8,19 @@
         {
           "name": "dealerNumber",
           "isHandWritten": false,
-          "x": 87, "y": 85
+          "x": 87, "y": 88
         },
         {
           "name": "contractNumber",
-          "x": 245, "y": 85
+          "x": 245, "y": 88
         },
         {
           "name": "rosNumber",
-          "x": 396, "y": 85
+          "x": 396, "y": 88
         },
         {
           "name": "stockNumber",
-          "x": 581, "y": 85
+          "x": 581, "y": 88
         },
 
 

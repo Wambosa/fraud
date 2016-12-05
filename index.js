@@ -78,21 +78,43 @@ function recurseCreate(countDown) {
 	                if(charCount >= 425)
 	                    console.log(`WARN: ${saveName} char render count is ${charCount}`);
                 }
+                
+                
+                let rotations = [
+                    {name: "up", type: "vertical", angle: 0, width: img.width, height: img.height},
+                    {name: "left", angle: 90, width: img.height, height: img.width},
+                    {name: "down", type: "vertical", angle: 180, width: img.width, height: img.height},
+                    {name: "right", angle: 270, width: img.height, height: img.width}
+                ];
+                
+                let r = rotations[Math.floor(Math.random()*4)];
+                
+                gd.create(r.width, r.height, function(err, finalImage){
+                    
+                    if(r.type == "vertical")
+                        dest.copyRotated(finalImage, r.width*.5, r.height*.5, 0, 0, r.width, r.height, r.angle);
+                    else
+                        dest.copyRotated(finalImage, r.width*.5, r.height*.5, 0, 0, r.height, r.width, r.angle);
 
-                let fileExt = 'jpg';
+                    let fileExt = 'jpg';
+    
+                    finalImage.saveJpeg(`build/${saveName}.${fileExt}`, 75, function(err) {
+                        if(err)
+                            reject(err);
+    
+                        console.log(`saved: ${saveName}`);
+                        finalImage.destroy();
+    
+                        if(++savedFiles === cache.docs.length) {
+                            console.log(`${(countDown - cache.docs.length)} files left to go`);
+                            resolve(recurseCreate(countDown - cache.docs.length));
+                        }
+                    });
 
-                dest.saveJpeg(`build/${saveName}.${fileExt}`, 75, function(err) {
-                    if(err)
-                        reject(err);
-
-                    console.log(`saved: ${saveName}`);
-                    dest.destroy();
-
-                    if(++savedFiles === cache.docs.length) {
-                        console.log(`${(countDown - cache.docs.length)} files left to go`);
-                        resolve(recurseCreate(countDown - cache.docs.length));
-                    }
                 });
+
+
+
             });
         });
     });
