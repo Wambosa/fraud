@@ -60,14 +60,20 @@ function recurseCreate(countDown) {
 
 	            let appliedRotation = doc.rotation || ["up", "left", "down", "right"][Math.floor(Math.random()*4)];
 	            let r = rotations[appliedRotation];
+	            
+                if(doc.fields){
+	                let bb = writeTextOnImage(doc, person, dest).map(function(box){
+		                return rotateBoundingBox(box, {width: r.width, height: r.height}, appliedRotation);
+	                });
 
-                if(doc.fields)
-		            saveMetadata({
-			            name: saveName,
-			            class: doc.class,
-			            rotation: appliedRotation,
-			            fields: writeTextOnImage(doc, person, dest)
-		            });
+	                saveMetadata({
+		                name: saveName,
+		                class: doc.class,
+		                rotation: appliedRotation,
+		                fields: bb
+	                });
+                }
+
 
                 gd.create(r.width, r.height, function(err, finalImage){
 
@@ -147,6 +153,22 @@ function writeTextOnImage(doc, person, dest){
 		console.log(`WARN: ${person.first}_${person.last}_${doc.class} char render count is ${charCount}`);
 
 	return boundingBoxes;
+}
+
+function rotateBoundingBox(box, img, appliedRotation){
+	//we only want the top-left XY then bottom-right XY
+	//note: this is relative. would be better if it perfectly represented the after rotated version
+	let adjusted = {
+		"up": [box.bounds[6], box.bounds[7], box.bounds[2], box.bounds[3]],
+		"left": [box.bounds[7], img.height - box.bounds[6], box.bounds[3], img.height - box.bounds[2]],
+		"down": [img.width - box.bounds[6], img.height - box.bounds[7], img.width - box.bounds[2], img.height - box.bounds[3]],
+		"right": [img.width - box.bounds[7], box.bounds[6], img.width - box.bounds[3], box.bounds[2]]
+	}[appliedRotation];
+
+	return {
+		name: box.name,
+		bounds: adjusted
+	};
 }
 
 if(!fs.existsSync(buildDir))
