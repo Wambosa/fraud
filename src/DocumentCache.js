@@ -24,7 +24,7 @@ module.exports = {
             if(doc.form && doc.form.length > 35)
                 console.warn(`\n\n\nHEY! doc ${doc.class} has ${doc.form.length} fields`,
                     'node-gd tends to silent fail some text rendering with too many fields or characters',
-                    'roughly greater than 425 characters can get the bug');
+                    'roughly greater than 425 characters can get the bug.\n\n\n');
 
             gd.openJpeg(`./data/${doc.file}`, function(err, img) {
                 if (err)
