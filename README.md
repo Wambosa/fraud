@@ -157,7 +157,6 @@ flags can be applied to either documents or individual fields to alter the way i
 - honor handwriting font
 - set document font or pool of fonts
 - add links to example output
-- add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
 - support asynchronous data generator (for potentially network dependant sources)
 - support more than just openJPEG
 - customize export file format
