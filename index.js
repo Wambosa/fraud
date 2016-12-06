@@ -34,8 +34,8 @@ function main(args) {
         return recurseCreate(fileCount).then(function(){
             cache.destroy();
             console.log("done!");
-        })
-        .catch(console.error); //erase this soon
+        });
+
     })
     .catch(console.error);
 }
@@ -137,20 +137,20 @@ function saveMetadata(object){
 function writeTextOnImage(doc, person, dest){
 	let iPromiseYou = [];
 
-	if(person.handwriting && doc.isColor)
-		var textColor = dest.colorAllocate(person.handwriting.color.r, person.handwriting.color.g, person.handwriting.color.b);
-
 	let defaultFontSize = doc.fontSize || 15;
 	let sizeDeviation = person.handwriting && person.handwriting.size || 1;
 	let angle = person.handwriting && person.handwriting.angle;
 
-	let col = textColor || dest.colorAllocate(0,0,0,1);
+	let defaultColor = doc.color || dest.colorAllocate(0,0,0,1);
 
 	doc.fields.forEach(function(field) {
 
+		if(field.isHandWritten && person.handwriting && doc.color)
+			var textColor = dest.colorAllocate(person.handwriting.color.r, person.handwriting.color.g, person.handwriting.color.b);
+
 		iPromiseYou.push(new Promise(function(resolve) {
 			dest.stringFT(
-				col,
+				textColor || defaultColor,
 				fontPath,
 				field.isHandWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
 				field.isHandWritten && angle || 0,
@@ -162,7 +162,7 @@ function writeTextOnImage(doc, person, dest){
 			resolve({
 				name: field.name,
 				bounds: dest.stringFTBBox(
-				col,
+				defaultColor,
 				fontPath,
 				field.isHandWritten && (defaultFontSize * sizeDeviation) || defaultFontSize,
 				field.isHandWritten && angle || 0,

@@ -26,7 +26,7 @@ module.exports = {
                     if(err)
                         return reject(err);
     
-                    if(!doc.isColor)
+                    if(!doc.color)
                         img.grayscale();
     
                     doc.gdImg = img;

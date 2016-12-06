@@ -1,12 +1,12 @@
-# Fabricated Realistic Unique Artificial Documents
+# Fabricated, Realistic, and Unique Documents
 _mass image generation_
 
 Despite its name, the intent is not to actually commit fraud itself. The need is for quickly creating many realistic scanned/photographed documents.
-FRUAD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata. Fun Fact: intentionally swapped the _u_ and _a_ in fraud
+FRaUD uses a **data generator** to randomly create _people_ with filled documents using **document templates** and **positional** metadata.
 
 
 # Installation
-- you **cannot** just call npm install since libgd needs to be built!
+- you **cannot** just call npm install since libgd needs to be built first!
 
 ## Ubuntu Install
 - `sudo apt-get update`
@@ -30,13 +30,103 @@ FRUAD uses a **data generator** to randomly create _people_ with filled document
 - reads from data folder and populates blank documents using positional metadata json file `templateMetadata.json`
 
 
-## future
-- verbose CLI arguments such as (--gen --count --debug --silent --out)
+# How it works
+The FRaUD program requires a **data source** to correspond with **template metadata**.
+
+### data source
+- An example data source is: **./example/exampleGenerator.js**.
+- the data source must have a _synchronous_ method named **generate**. _(planning on supporting async soon)_
+- At a minimum, ```generate()``` _must_ return the **required fields**: **first** and **last**.
+- **ssn** and **fullName** are custom fields that correspond with the **template metadata**; eventually becoming actualized on a fabricated document instance. 
+- **handwriting** is optional, and can provide some customization to simulated signatures that differs from the default font of the document instance.
+ - within handwriting:
+ - **angle** _optional_: will make the text appear tilted. Beware that this is a very sensitive number.
+ - **font** _optional_: is a future string path to a font
+ - **size** _optional_: is a percentage used to multiply by the default baseline fontsize.
+ - **color** _optional_: is a 0-255 rgb color value object
+ 
+```
+module.exports = {
+    generate: function(){
+        return {
+            first: "james",
+            last: "bond",
+            
+            ssn: "123-45-6789",
+            fullName: "james bond",
+            
+            handwriting: {
+                angle: randomInt(-4, 4) * .025,
+                font: 'future todo',
+                size: randomInt(3, 12) * .1,
+                color: {r: randomInt(0,255), g: randomInt(0,255), b: randomInt(0,255)}
+            }
+        }
+    }
+}
+```
+
+### template metadata
+- An example **template metadata** is: **./data/templateMetadata.json**  
+ - **class** _required_: is a name used to refer to the type of document. It is completely cosmetic to this program. It is used in the file output name.
+ - **file** _required_: is ideally some image of a document with empty fields located in the ```./data``` directory.
+ - **fontSize** _optional_: is a default baseline font size before any handwriting is applied to a document instance.
+ - **fields** _optional_: is an array of ```{name: "myFieldName", x: 0, y: 0}``` 
+  - where the value of **name** corresponds to output from the aforementioned **data source**. 
+  - **x & y** are pixel coordinates (starting from top-left).
+ - all of these documents _must_ be placed in a json file located and named **./data/templateMetadata.json**
+  - additionally the documents must be inside an array named ```docs: []```
+  
+```
+{
+    docs: [
+        {
+          "class": "SsnCard",
+          "file": "ssn_template.jpg",
+          "fontSize": 12,
+          "fields": [
+            {
+              "name": "ssn",
+              "x": 175, "y": 135
+            },
+            {
+              "name": "fullName",
+              "isHandWritten": true,
+              "x": 165, "y": 223
+            }
+          ]
+        }
+    ]
+}
+```
+
+# flags
+flags can be applied to either documents or individual fields to alter the way it looks
+
+### document
+- **color** is a 0-255 rgb color value object ```{r: 255, g: 0, b: 0}``` (prevents default grayscaling of the image on load)
+- **rotation** (can be one of string value: "up", "down", "left", "right"; in order to enforce a particular direction every time. default is random)
+
+### field
+- **isHandwritten** (utilizes the _optional_ handwriting provided by the **data source**)
+
+
+# future
+- verbose CLI arguments such as 
+ - --gen (the location to the random data generator)
+ - --templates (the location of the templateMetadata)
+ - --count (the approximate number of documents you wish to generate) 
+ - --debug (for debuggy stuff. more console logging)
+ - --silent (no console.logging) 
+ - --out (the directory to place newly created docs)
+ - --no-meta (do not create the .json files associated with each document)
 - use pool of template images per type
+- honor handwriting font
+- set document font or pool of fonts
 - add links to example output
 - add to readme, the required generator interface (since there are some fields that are mandatory; `first`, `last`, `generate()`)
 - support asynchronous data generator (for potentially network dependant sources)
-- work around node-gd limitations (mostly a **wontfix** for this quick light image processing implementation)
+- support more than just openJPEG
 - customize export file format
 
 ## notes
