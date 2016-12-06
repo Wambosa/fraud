@@ -127,7 +127,7 @@ function getRotationConfig(img, appliedRotation){
 
 function saveMetadata(object){
 	return new Promise(function(resolve, reject){
-		fs.writeFile(`${buildDir}/${object.name}.json`, JSON.stringify(object), function(err){
+		fs.writeFile(`${buildDir}/${object.name}.json`, JSON.stringify(object, null, ' '), function(err){
 			if(err) reject(err);
 			else resolve();
 		});

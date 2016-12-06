@@ -29,6 +29,39 @@ FRaUD uses a **data generator** to randomly create _people_ with filled document
     - where **/my/dir/dataGen.js** is the random data generator created by _you_
 - reads from data folder and populates blank documents using positional metadata json file `templateMetadata.json`
 
+# Resulting Images & Output
+- ![](http://shondiaz.com/host/Jakie_Hermina_AutoContract.jpg)
+- ![](http://shondiaz.com/host/Jakie_Hermina_DriversLicense.jpg)
+- ![](http://shondiaz.com/host/Jakie_Hermina_SsnCard.jpg)
+- metadata json
+
+```
+{
+ "name": "Jakie_Hermina_SsnCard",
+ "class": "SsnCard",
+ "rotation": "up",
+ "fields": [
+  {
+   "name": "ssn",
+   "bounds": [
+    174,
+    120,
+    277,
+    136
+   ]
+  },
+  {
+   "name": "fullName",
+   "bounds": [
+    162,
+    213,
+    237,
+    228
+   ]
+  }
+ ]
+}
+```
 
 # How it works
 The FRaUD program requires a **data source** to correspond with **template metadata**.
@@ -38,7 +71,7 @@ The FRaUD program requires a **data source** to correspond with **template metad
 - the data source must have a _synchronous_ method named **generate**. _(planning on supporting async soon)_
 - At a minimum, ```generate()``` _must_ return the **required fields**: **first** and **last**.
 - **ssn** and **fullName** are custom fields that correspond with the **template metadata**; eventually becoming actualized on a fabricated document instance. 
-- **handwriting** is optional, and can provide some customization to simulated signatures that differs from the default font of the document instance.
+- **handwriting** is optional, and can provide some customization to simulated signatures that differs from the default font of a document instance.
  - within handwriting:
  - **angle** _optional_: will make the text appear tilted. Beware that this is a very sensitive number.
  - **font** _optional_: is a future string path to a font
@@ -128,6 +161,7 @@ flags can be applied to either documents or individual fields to alter the way i
 - support asynchronous data generator (for potentially network dependant sources)
 - support more than just openJPEG
 - customize export file format
+- maybe allow generator to supply images for certain fields
 
 ## notes
 - [good structured data](http://www.gutenberg.org/files/3201/files/)
