@@ -1,29 +1,77 @@
 "use strict";
 
-var root = process.cwd();
-
-var fs = require('fs');
-var gd = require('node-gd');
+const fs = require('fs');
+const gd = require('node-gd');
 var cache = require('./src/DocumentCache');
+const ArgumentParser = require('argparse').ArgumentParser;
 
-const buildDir = `${root}/build`;
+const root = process.cwd();
+
 const fontPath = `${root}/fonts/LibreBaskerville-Regular.ttf`;
 
+
 var gen = null;
+var outDir = `${root}/build`;
 
-main(process.argv.splice(2));
+let parser = new ArgumentParser({
+	version: '1.0.0',
+	addHelp:true,
+	description: 'use this to generate many fake documents for machine learning proof of concept'
+});
 
-function main(args) {
+parser.addArgument(
+  ['-g', '--gen', '--generator'],
+  {help: 'the file path to the random data generator node module'}
+);
+parser.addArgument(
+  ['-t', '--template'],
+  {help: 'the file path to template image metadata'}
+);
+parser.addArgument(
+  ['-i', '--in'],
+  {help: 'the path to a directory where template images are stored'}
+);
+parser.addArgument(
+  ['-c', '--count'],
+  {help: 'the approximate number of documents you wish to generate'}
+);
+parser.addArgument(
+  ['-d', '--debug', '--verbose'],
+  {help: 'verbose logging (not yet supported, always on by default)'}
+);
+parser.addArgument(
+  ['-s', '--silent'],
+  {help: 'only error output (not yet supported)'}
+);
+parser.addArgument(
+  ['-o', '--out'],
+  {help: 'the path to a directory where created images will be saved to'}
+);
+parser.addArgument(
+  '--no-meta',
+  {
+	action: 'storeTrue',
+  	help: 'do not create the .json metadata files associated with each document'
+  }
+);
 
-    if(!fs.existsSync(buildDir))
-    	fs.mkdirSync(buildDir);
+const settings = parser.parseArgs();
+
+main();
+
+function main() {
+
+	outDir = settings.out || outDir;
+
+    if(!fs.existsSync(outDir))
+    	fs.mkdirSync(outDir);
 
     cache.preloadDocuments().then(function() {
     	    
     	console.log(`optimal pre-load  of ${cache.docs.length} documents`);
     
-        let fileCount = +args[0] || 1;
-        let dataGen = args[1] || './example/exampleGenerator.js';
+        let fileCount = +settings.count || 1;
+        let dataGen = settings.template || './example/exampleGenerator.js';
     
         console.log(`BEGIN Image Generation of ${fileCount} ish files using ${dataGen} generator`);
     
@@ -68,6 +116,10 @@ function recurseCreate(countDown) {
 
                 if(doc.fields)
                     myPromiseToYou = writeTextOnImage(doc, person, blankImage).then(function(boundingBoxes){
+                        
+                        if(settings.no_meta)
+                        	return Promise.resolve();
+                        
                         return saveMetadata({
                             name: saveName,
                             class: doc.class,
@@ -127,7 +179,7 @@ function getRotationConfig(img, appliedRotation){
 
 function saveMetadata(object){
 	return new Promise(function(resolve, reject){
-		fs.writeFile(`${buildDir}/${object.name}.json`, JSON.stringify(object), function(err){
+		fs.writeFile(`${outDir}/${object.name}.json`, JSON.stringify(object), function(err){
 			if(err) reject(err);
 			else resolve();
 		});
@@ -159,7 +211,7 @@ function writeTextOnImage(doc, person, dest){
 				''+person[field.name]
 			);
 
-			resolve({
+			resolve(!settings.no_meta && {
 				name: field.name,
 				bounds: dest.stringFTBBox(
 				defaultColor,

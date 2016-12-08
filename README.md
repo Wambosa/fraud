@@ -23,11 +23,29 @@ FRaUD uses a **data generator** to randomly create _people_ with filled document
 ## Windows Install
 **NOT** compatible with windows :( due to node-gd dependency
 
-## usage
-- ```node ./index.js 9000 /my/dir/dataGen.js```
-    - where **9000** is the number of randomly generated documents you want
-    - where **/my/dir/dataGen.js** is the random data generator created by _you_
-- reads from data folder and populates blank documents using positional metadata json file `templateMetadata.json`
+#Usage
+- ```node ./index.js``` (no args results in using the below example defaults)
+- ```node ./index.js --count 5 --gen ./exmaple/exampleGenerator.js --template ./data/templateMetadata.json```
+    - where **5** is the number of randomly generated documents you want
+    - where **./exmaple/exampleGenerator.js** is the random data generator created by _you_
+- reads from template image folder ```./data``` and populates blank documents using positional metadata json file `templateMetadata.json`
+- ```node index.js --help```
+
+```
+Optional arguments:
+  -h, --help            Show this help message and exit.
+  -v, --version         Show program's version number and exit.
+  -g GEN, --gen GEN     the file path to the random data generator node module
+  --template TEMPLATE   the file path to template image metadata
+  --in IN               the path to a directory where template images are 
+                        stored
+  --count COUNT         the approximate number of documents you wish to 
+                        generate
+  -o OUT, --out OUT     the path to a directory where created images will be 
+                        saved to
+  --no-meta             do not create the .json metadata files associated 
+                        with each document
+```
 
 # Resulting Images & Output
 - ![](http://shondiaz.com/host/Jakie_Hermina_AutoContract.jpg)
@@ -133,8 +151,8 @@ module.exports = {
 }
 ```
 
-# flags
-flags can be applied to either documents or individual fields to alter the way it looks
+# Template Flags
+flags can be applied to either documents or individual fields inside of the **template metadata json** to alter the way text renders on newly created instances
 
 ### document
 - **color** is a 0-255 rgb color value object ```{r: 255, g: 0, b: 0}``` (prevents default grayscaling of the image on load)
@@ -145,14 +163,6 @@ flags can be applied to either documents or individual fields to alter the way i
 
 
 # future
-- verbose CLI arguments such as 
- - --gen (the location to the random data generator)
- - --templates (the location of the templateMetadata)
- - --count (the approximate number of documents you wish to generate) 
- - --debug (for debuggy stuff. more console logging)
- - --silent (no console.logging) 
- - --out (the directory to place newly created docs)
- - --no-meta (do not create the .json files associated with each document)
 - use pool of template images per type
 - honor handwriting font
 - set document font or pool of fonts

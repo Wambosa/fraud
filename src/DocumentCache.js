@@ -1,7 +1,5 @@
 "use strict";
 
-var templateMetadata = require(`../data/templateMetadata.json`);
-
 var docsPreload = [];
 
 module.exports = {
@@ -14,7 +12,10 @@ module.exports = {
         });
     },
 
-    preloadDocuments: function(){
+    preloadDocuments: function(templateMetadataFilePath, templateFilePath){
+        
+        let templateMetadata = require(templateMetadataFilePath || `../data/templateMetadata.json`);
+        
         let gd = require('node-gd');
 
         let count = 0;
@@ -22,7 +23,7 @@ module.exports = {
         return new Promise(function(resolve, reject){
             templateMetadata.docs.forEach(function(doc){
     
-                gd.openJpeg(`./data/${doc.file}`, function(err, img) {
+                gd.openJpeg(`${templateFilePath || './data'}/${doc.file}`, function(err, img) {
                     if(err)
                         return reject(err);
     

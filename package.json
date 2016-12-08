@@ -1,9 +1,9 @@
 {
-  "name": "fruad",
+  "name": "fraud",
   "version": "1.0.0",
   "description": "used to mass generate realistic looking files",
   "main": "index.js",
-  "repository": "https://github.com/Wambosa/fruad",
+  "repository": "https://github.com/Wambosa/fraud",
   "scripts": {
     "start": "index.js"
   },
@@ -12,6 +12,7 @@
     "node": ">=4.2.4"
   },
   "dependencies": {
+    "argparse": "^1.0.9",
     "node-gd": "*"
   }
 }
