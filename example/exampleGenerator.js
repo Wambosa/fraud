@@ -35,6 +35,7 @@ module.exports = {
 
         let first = randName();
         let last = randName();
+        let guid = `${first}_${last}`;
         let fullName = `${first} ${last}`;
         let appId = "";
         for(let i=0; i < fullName.length; i++)
@@ -171,6 +172,7 @@ module.exports = {
 	        insuranceEffective: insurance.effectiveDate,
 	        insuranceExpiration: insurance.expiration,
 
+			guid: guid,
 	        handwriting: {
                 angle: randomInt(-4, 4) * .025,
                 font: 'future todo',

@@ -108,7 +108,7 @@ function recurseCreate(countDown) {
 
                 img.copy(blankImage, 0, 0, 0, 0, blankImage.width, blankImage.height);
 
-	            let saveName = `${person.first}_${person.last}_${doc.class}`;
+	            let saveName = `${person.guid}_${doc.class}`;
 	            
 	            let appliedRotation = doc.rotation || ["up", "left", "down", "right"][Math.floor(Math.random()*4)];
 

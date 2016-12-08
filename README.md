@@ -87,8 +87,8 @@ The FRaUD program requires a **data source** to correspond with **template metad
 ### data source
 - An example data source is: **./example/exampleGenerator.js**.
 - the data source must have a _synchronous_ method named **generate**. _(planning on supporting async soon)_
-- At a minimum, ```generate()``` _must_ return the **required fields**: **first** and **last**.
- - additionally sufficient effort should be made to ensure that the first+last strings form a unique key or else output may override files/people with the same name
+- At a minimum, ```generate()``` _must_ return the **required field**: **guid**.
+ - additionally sufficient effort should be made to ensure that the guid is indeed unique lest the file saves override existing files with the same guid
 - **ssn** and **fullName** are custom fields that correspond with the **template metadata**; eventually becoming actualized on a fabricated document instance. 
 - **handwriting** is optional, and can provide some customization to simulated signatures that differs from the default font of a document instance.
  - within handwriting:
@@ -101,6 +101,7 @@ The FRaUD program requires a **data source** to correspond with **template metad
 module.exports = {
     generate: function(){
         return {
+            guid: "james_bond_1234567890",
             first: "james",
             last: "bond",
             
@@ -167,12 +168,10 @@ flags can be applied to either documents or individual fields inside of the **te
 - use pool of template images per type
 - honor handwriting font
 - set document font or pool of fonts
-- add links to example output
 - support asynchronous data generator (for potentially network dependant sources)
 - support more than just openJPEG
 - customize export file format
 - maybe allow generator to supply images for certain fields
-- prolly change the fileName key to something more obvious like ```guid```, since first last can be dual purpose
 
 ## notes
 - [good structured data](http://www.gutenberg.org/files/3201/files/)
