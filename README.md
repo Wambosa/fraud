@@ -25,9 +25,9 @@ FRaUD uses a **data generator** to randomly create _people_ with filled document
 
 #Usage
 - ```node ./index.js``` (no args results in using the below example defaults)
-- ```node ./index.js --count 5 --gen ./exmaple/exampleGenerator.js --template ./data/templateMetadata.json```
+- ```node ./index.js --count 5 --gen ./example/exampleGenerator.js --template ./data/templateMetadata.json```
     - where **5** is the number of randomly generated documents you want
-    - where **./exmaple/exampleGenerator.js** is the random data generator created by _you_
+    - where **./example/exampleGenerator.js** is the random data generator created by _you_
 - reads from template image folder ```./data``` and populates blank documents using positional metadata json file `templateMetadata.json`
 - ```node index.js --help```
 
