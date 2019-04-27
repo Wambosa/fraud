@@ -165,6 +165,7 @@ flags can be applied to either documents or individual fields inside of the **te
 
 
 # future
+- shrink document instances by a percent range? (will need higher quality template images)
 - use pool of template images per type
 - honor handwriting font
 - set document font or pool of fonts
